@@ -1,23 +1,17 @@
-import React, { useEffect, useCallback } from "react";
+import React from "react";
 import UserCard from "./UserCard";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from '../../actions';
+import { useSelector } from "react-redux";
 
 const UserList = () => {
-
-    const dispatch = useDispatch();
+    // getting user list from store:
     const users = useSelector(state => state);
-    console.log(users);
-    const dispatchFetchUsers = useCallback(() => dispatch(fetchUsers()), [dispatch]);
-    useEffect(() => {
-        dispatchFetchUsers();
-    }, [dispatchFetchUsers])
+    //console.log(users);
 
     const renderList = (users) => {
         return users.map(user => {
             return <UserCard
                 key={users.indexOf(user)}
-                id={user.id?.value ? user.id?.value : users.indexOf(user)}
+                id={user._id}
                 name={user.name}
                 email={user.email}
                 image={user.picture?.medium}

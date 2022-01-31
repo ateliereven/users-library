@@ -8,13 +8,14 @@ import Modal from "../Modal";
 const UserDelete = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-    //const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-    const selectedUser = useSelector(state => state.find(user => user.id === id));
-    console.log(selectedUser)
+    //(need to use == and not ===):
+    // eslint-disable-next-line 
+    const selectedUser = useSelector(state => state.find(user => user._id == id)) ;
 
     const handleDeleteClick = () => {
-        //dispatch(deleteUser(selectedUser));
+        dispatch(deleteUser(selectedUser));
         navigate('/');
     }
 

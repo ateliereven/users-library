@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useCallback } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { fetchUsers } from '../actions';
 import '../css/App.css';
 
 import Header from "./Header";
@@ -9,6 +11,13 @@ import UserEdit from "./users/UserEdit";
 import UserDelete from "./users/UserDelete";
 
 const App = () => {
+
+  const dispatch = useDispatch();
+// Fetching users from api and saving state of store:
+  const dispatchFetchUsers = useCallback(() => dispatch(fetchUsers()), [dispatch]);
+  useEffect(() => {
+    dispatchFetchUsers();
+  }, [dispatchFetchUsers])
 
   return (
     <div className="ui container">

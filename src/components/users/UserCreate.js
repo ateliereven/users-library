@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { createUser } from "../../actions";
 import Modal from "../Modal";
@@ -15,24 +15,14 @@ const UserCreate = () => {
         navigate('/');
     }
 
-    const renderActions = () => {
-        return (
-            <React.Fragment>
-                <button onClick={() => onSubmit()} className="ui button teal">Add</button>
-                <Link to='/' className="ui button">Cancel</Link>
-            </React.Fragment>
-        )
-    }
-
     const renderContent = () => {
-        return <UserForm onSubmit={onSubmit}/>
+        return <UserForm onSubmit={onSubmit} isAdd={true}/>
     }
 
     return <div>
         <Modal
             title="Create new User"
             content={renderContent()}
-            actions={renderActions()}
             onDismiss={() => navigate('/')}
         />
     </div>

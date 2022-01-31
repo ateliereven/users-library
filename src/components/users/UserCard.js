@@ -4,9 +4,11 @@ import cardStyles from "../../css/UserCard.module.css";
 
 const UserCard = ({ id, name, email, image, location }) => {
     return <div className="card">
-        <div className={cardStyles.images}>
-            <img className={cardStyles.images} src={image} alt="my user pic" />
-        </div>
+        {image && 
+            <div className={cardStyles.images}>
+                <img className={cardStyles.images} src={image} alt="my user pic" />
+            </div>
+        }
         
         <div className="content">
             <div className="ui blue header">{`${name.title} ${name.first} ${name.last}`}</div>
