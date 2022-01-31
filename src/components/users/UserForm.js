@@ -7,7 +7,6 @@ const UserForm = (props) => {
 
     // Get list of existing email addresses of current users:
     const userEmails = useSelector(state => state.map(user => user.email));
-    console.log(userEmails);
 
     // Display an error message:
     const renderError = ({ error, touched }) => { // error and touched are destructured from meta
@@ -24,8 +23,9 @@ const UserForm = (props) => {
         if (re.test(email) === false) return 'Please enter a valid email address';
         // make sure email doesn't already exist (unless editing a user and it's the user's current email address)
         if (userEmails.includes(email)) {
-            if (props.email && props.email === email) return
-        } else return 'Email already exists in library';
+            if (props.email && props.email === email) return;
+            else return 'Email already exists in library';
+        }
     }
 
     // the field attributes:
@@ -52,7 +52,7 @@ const UserForm = (props) => {
     // Whenever the user submits the form the inputs are validated. 
     // If they are valid onSubmit callback is called from the parent component and all form values are dispatched
     const onSubmit = (formValues) => {
-        console.log(formValues)
+        //console.log(formValues)
         props.onSubmit(formValues)
     }
 
@@ -96,11 +96,11 @@ const UserForm = (props) => {
                         <Field name="location[street][name]" component={renderInput} label="Street" />
                         <Field name="location[street][number]" component={renderInput} label="Number" />
                     </div>
-                    <br/>
+                    <br />
                     <div >
                         <Link to='/' className="ui button right floated">Cancel</Link>
                         <button type="submit" className="ui teal button right floated">{props.isAdd ? 'Add' : 'Save'}</button>
-                        
+
                     </div>
                 </form>
             )}
