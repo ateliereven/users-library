@@ -1,0 +1,10 @@
+  .images {
+      align-self: center;
+  }
+
+  .images img {
+      height: 100px;
+      width: 100px;
+      margin-top: 0.5em;
+      border-radius: 50% !important;
+  }

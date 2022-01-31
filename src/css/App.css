@@ -1,0 +1,9 @@
+  body, html {
+      min-height: 100vh;
+      flex-direction: column;
+      background-color: #f5f5f5;
+  }
+
+  #user-cards {
+      justify-content: center;
+  }
