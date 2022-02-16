@@ -27,7 +27,9 @@ const UserCard = ({ id, name: {title, first, last}, email, image, location: {cou
                         image={image}
                         alt="my user pic"
                     /> 
-                    : <AccountCircleSharpIcon className={cardStyles.icon}/>
+                    : <Typography className={cardStyles.iconContainer} >
+                        <AccountCircleSharpIcon fontSize="" className={cardStyles.icon} />
+                        </Typography>
                 }
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">

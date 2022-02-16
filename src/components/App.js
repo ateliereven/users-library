@@ -46,7 +46,6 @@ const App = () => {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Header />
-          <UserList />
           <Routes>
             <Route path='/' exact element={<UserList/>} />
             <Route path='/user/new' exact element={<UserCreate />} />

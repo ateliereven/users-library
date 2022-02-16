@@ -24,7 +24,7 @@ const UserDelete = () => {
     const renderActions = () => {
         return (
             <React.Fragment>
-                <Link to='/'><Button variant="contained" sx={{ backgroundColor: (theme) => theme.palette.grey[400], mr: 2 }}>
+                <Link to='/' style={{ textDecoration: 'none'}}><Button variant="contained" sx={{ backgroundColor: (theme) => theme.palette.grey[400], mr: 2 }}>
                     Cancel
                 </Button></Link>
                 <Button onClick={() => handleDeleteClick()} color="error" variant="contained">

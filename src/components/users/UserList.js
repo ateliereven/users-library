@@ -11,7 +11,7 @@ const UserList = () => {
     //console.log(users);
 
     const renderList = (users) => {
-        return users.map(user => {
+        return users.sort((a, b) => a._id - b._id).map(user => {
             return <UserCard
                 key={users.indexOf(user)}
                 id={user._id}
@@ -29,9 +29,7 @@ const UserList = () => {
                 <Container sx={{ py: 5 }} >
                     <Grid container spacing={4} justifyContent="center"
                         alignItems="center">
-                    
                         {renderList(users)}
-                    
                     </Grid>
                 </Container>
             </main>

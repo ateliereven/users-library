@@ -84,8 +84,8 @@ const Header = (props) => {
                                 }}
                             >
                                 {navLinks.map((navLink) => (
-                                    <MenuItem key={navLink.text} onClick={handleCloseNavMenu}>
-                                        <Link to={navLink.url} >{navLink.text}</Link>
+                                    <MenuItem key={navLink.text} onClick={handleCloseNavMenu} >
+                                        <Link to={navLink.url} style={{ textDecoration: 'none' }}>{navLink.text}</Link>
                                     </MenuItem>
                                 ))}
                             </Menu>

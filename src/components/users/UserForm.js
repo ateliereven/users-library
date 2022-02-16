@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Typography, Grid, Button, TextField, Box } from '@mui/material';
 
+import FIELDS from "./formFields";
+
 const UserForm = (props) => {
 
     // Get list of existing email addresses of current users:
@@ -20,19 +22,23 @@ const UserForm = (props) => {
         }
     }
 
-    // the form field attributes:
-    const FIELDS = {
-        title: { label: "Title",name: "title" },
-        first: { label: "First name", name: "first" },
-        last: {label: "Last name",name: "last"},
-        email: {label: "Enter Email", name: "email"},
-        country: {label: "Country", name: "country"},
-        city: {label: "City", name: "city"},
-        street: {label: "Street", name: "street"},
-        number: {label: "Street Number", name: "number"}
-    };
+    // create form fields:
+    const renderFields = (fields) => {
+        return fields.map((field) => {
+            return (
+                <Field
+                    fullWidth
+                    required
+                    name={field.name}
+                    component={renderInput}
+                    label={field.label}
+                    key={field.label}
+                />
+            )
+        })
+    }
 
-    //Return an input element to the component prop, and hook it with relevant properties deconstructed from formProps:  
+    //Return an input element to the component prop of Field, and hook it with relevant properties deconstructed from formProps:  
     const renderInput = ({ input, label, meta }) => {
         return (
             <TextField
@@ -62,102 +68,67 @@ const UserForm = (props) => {
             onSubmit={onSubmit}
             //validation:
             validate={(formValues) => {
-                const errors = {}
+                const errors = {name:{}, location:{street:{}}}
                 //if no emails have been entered provide an empty string. if there are emails run the function:
                 errors.email = validateEmails(formValues.email || '');
-                // to get a customised error message for each field:
-                for (let field in FIELDS) {
-                    if (!formValues[field] && FIELDS[field].label && FIELDS[field].label !== "Enter Email") {
-                        errors[field] = `Please enter ${FIELDS[field].label.toLowerCase()}`
+
+                // to get a customised error message for each field (should have used a general function for all, nested objects created a challenge):
+                FIELDS.forEach(({ name, label }) => {
+                    //console.log(formValues[name]) - returns undefined...
+                    if (!formValues[name] && formValues[label]) {
+                        errors[name] = `Please enter ${label.toLowerCase()}`
                     }
+                })
+
+                if (!formValues.name?.title) {
+                    errors.name.title = 'Please enter title'
+                }
+                if (!formValues.name?.first) {
+                    errors.name.first = 'Please enter first name'
+                }
+                if (!formValues.name?.last) {
+                    errors.name.last = 'Please enter last name'
+                }
+                if (!formValues.location?.country) {
+                    errors.location.country = 'Please enter country'
+                }
+                if (!formValues.location?.city) {
+                    errors.location.city = 'Please enter city'
+                }
+                if (!formValues.location?.street?.name) {
+                    errors.location.street.name = 'Please enter street'
+                }
+                if (!formValues.location?.street?.name) {
+                    errors.location.street.number = 'Please enter street number'
                 }
                 // 3 characters min per name:
-                if (formValues.first && formValues.first.length < 3) {
-                    errors.first = 'Name must be at least 3 characters long'
+                if (formValues.name?.first && formValues.name?.first.length < 3) {
+                    errors.name.first = 'Name must be at least 3 characters long'
                 }
                 return errors;
             }}
 
-            render={({ handleSubmit, submitting}) => (
+            render={({ handleSubmit, submitting }) => (
                 <form onSubmit={handleSubmit} noValidate autoComplete="off" >
-                    <Box sx={{'& .MuiTextField-root': { m: 1, width: '95%' }}} >
+                    <Box sx={{ '& .MuiTextField-root': { m: 1, width: '95%' } }} >
                         <Grid container alignItems="flex-start">
                             <Typography variant="subtitle1" gutterBottom component="label" sx={{ pb: 1 }}>
                                 Enter full name:
                             </Typography>
-
                             <Grid item xs={12}>
-                                
-                                <Field
-                                    fullWidth
-                                    required
-                                    name={FIELDS.title.name}
-                                    component={renderInput}
-                                    label={FIELDS.title.label}
-                                />
-
-                                <Field
-                                    fullWidth
-                                    required
-                                    name={FIELDS.first.name}
-                                    component={renderInput}
-                                    label={FIELDS.first.label}
-                                />
-                                <Field
-                                    fullWidth
-                                    required
-                                    name={FIELDS.last.name}
-                                    component={renderInput}
-                                    label={FIELDS.last.label}
-
-                                />
+                                {renderFields(FIELDS.slice(0,3))}
                             </Grid>
                             <Grid item xs={12} sx={{ py: 1.5 }}>
-                                <Field
-                                    fullWidth
-                                    required
-                                    type="email"
-                                    name={FIELDS.email.name}
-                                    component={renderInput}
-                                    label={FIELDS.email.label}
-                                />
+                                {renderFields(FIELDS.slice(3, 4))}
                             </Grid>
                             <Typography variant="subtitle1" gutterBottom component="label" sx={{ py: 1 }}>
                                 Enter full address:
                             </Typography>
                             <Grid item xs={12}>
-                                
-                                <Field
-                                    fullWidth
-                                    required
-                                    name={FIELDS.country.name}
-                                    component={renderInput}
-                                    label={FIELDS.country.label}
-                                />
-                                <Field
-                                    fullWidth
-                                    required
-                                    name={FIELDS.city.name}
-                                    component={renderInput}
-                                    label={FIELDS.city.label}
-                                />
-                                <Field
-                                    fullWidth
-                                    required
-                                    name={FIELDS.street.name}
-                                    component={renderInput}
-                                    label={FIELDS.street.label}
-                                />
-                                <Field
-                                    fullWidth
-                                    required
-                                    name={FIELDS.number.name}
-                                    component={renderInput}
-                                    label={FIELDS.number.label}
-                                />
+                                {renderFields(FIELDS.slice(4))}
                             </Grid>
                             <Grid container item sx={{ py: 1, justifyContent: 'flex-end' }} xs={12}>
-                                <Link to='/'>
+                                <Link to='/' style={{textDecoration: 'none'}}>
                                     <Button
                                         variant="contained"
                                         sx={{ backgroundColor: (theme) => theme.palette.grey[400], mr: 2 }}
