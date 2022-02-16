@@ -1,10 +1,12 @@
-  .images {
-      align-self: center;
-  }
-
-  .images img {
+  .images img, .icon {
       height: 100px;
       width: 100px;
-      margin-top: 0.5em;
-      border-radius: 50% !important;
+      margin: auto;
+      margin-top: 1em;
+      border-radius: 50%;
+  }
+
+  .iconContainer {
+      display: flex;
+      align-items: center;
   }

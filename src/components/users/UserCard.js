@@ -1,37 +1,66 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { Link as Anchor } from '@mui/material';
+import { IconButton, CardActionArea, CardActions, Box } from '@mui/material';
+import MailIcon from '@mui/icons-material/Mail';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import PersonIcon from '@mui/icons-material/Person';
+import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
+
 import cardStyles from "../../css/UserCard.module.css";
 
-const UserCard = ({ id, name, email, image, location }) => {
-    return <div className="card">
-        {image && 
-            <div className={cardStyles.images}>
-                <img className={cardStyles.images} src={image} alt="my user pic" />
-            </div>
-        }
-        
-        <div className="content">
-            <div className="ui blue header">{`${name.title} ${name.first} ${name.last}`}</div>
-            <div className="meta">
-                <i className="mail icon"></i>
-                <a href={`mailto:${email}`}>{email}</a>
-            </div>
-            <div className="description">
-                <i className="marker icon"></i>
-                {`${location.country}, ${location.city}, ${location.street?.number} ${location.street?.name}`}
-            </div>
-        </div>
-        <div className="extra content">
-            <span className="right floated">
-                <i className="user icon"></i>
-                {id}
-            </span>
-            <span>
-                <Link to={`/user/edit/${id}`}><i className="ui teal large edit icon"></i></Link>
-                <Link to={`/user/delete/${id}`}><i className="ui red large trash alternate icon"></i></Link>
-            </span>
-        </div>
-    </div>
+const UserCard = ({ id, name: {title, first, last}, email, image, location: {country, city, street:{name, number}} }) => {
+    return <Grid item  xs={12} md={6} lg={4}>
+        <Card elevation={3} sx={{maxWidth: '400px'}}>
+            <CardActionArea className={cardStyles.images}>
+                {image ?
+                    <CardMedia
+                        component='img'
+                        height='100'
+                        image={image}
+                        alt="my user pic"
+                    /> 
+                    : <AccountCircleSharpIcon className={cardStyles.icon}/>
+                }
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                        {`${title} ${first} ${last}`}
+                    </Typography>
+                    <Typography variant="body" color="text.secondary" gutterBottom={true} className={cardStyles.iconContainer}>
+                        <MailIcon sx={{ marginRight: '5px' }} />
+                        <Anchor href={`mailto:${email}`} color="inherit" underline="hover"
+                        >
+                            {email}
+                        </Anchor>
+                    </Typography>
+                    <Typography variant="body" color="text.secondary" gutterBottom={true} className={cardStyles.iconContainer}>
+                        <LocationOnIcon sx={{ marginRight: '5px' }}/>
+                        {`${country}, ${city}, ${number} ${name}`}
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
+            <CardActions sx={{ borderTop: 'solid 1px #eee' }}>
+                <Link to={`/user/edit/${id}`}><IconButton aria-label="edit" sx={{ backgroundColor: '#f8f8f8'}}>
+                    <EditIcon color="primary" fontSize="large"/>
+                    </IconButton> </Link>
+                <Link to={`/user/delete/${id}`}><IconButton aria-label="delete" sx={{ backgroundColor: '#f8f8f8' }}>
+                    <DeleteIcon color="error" fontSize="large"/>
+                    </IconButton> </Link>
+                    <Box sx={{ flexGrow: 1 }} />
+                <Typography variant="body" color="text.secondary" className={cardStyles.iconContainer}>
+                    <PersonIcon color="primary" fontSize="small" />
+                        {id}
+                    </Typography>
+            </CardActions>
+        </Card>
+    </Grid>
 }
 
 export default UserCard;

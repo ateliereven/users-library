@@ -17,12 +17,27 @@ export const createUser = formValues => async (dispatch, getState) => {
 }
 
 export const fetchUsers = () => async dispatch => {
-    const response = await axios.get('https://randomuser.me/api/?results=10.');
-    const results = response.data.results;
-    for (let result of results) {
-        result._id = results.indexOf(result) + 1;
+    // getting users from local storage:
+    const isUserList = JSON.parse(localStorage.getItem("users"));
+    const isExpiration = localStorage.getItem("expiration");
+    // check if data can be fetched from local storage:
+    if (isUserList && isExpiration > Number(new Date())) {
+        //console.log("getting items from local storage");
+        dispatch({ type: FETCH_USERS, payload: isUserList });}
+    // else make get request from api and save to local storage:
+    else {
+        //console.log("calling api")
+        const response = await axios.get('https://randomuser.me/api/?results=10.');
+        const results = response.data.results;
+        for (let result of results) {
+            result._id = results.indexOf(result) + 1;
+        }
+        localStorage.setItem("users", JSON.stringify(results));
+        const expiration = Number(new Date() * 3600 * 1000);
+        localStorage.setItem("expiration", expiration);
+        dispatch({ type: FETCH_USERS, payload: results });
     }
-    dispatch({ type: FETCH_USERS, payload: results });
+
 }
 
 export const editUser = (selectedUser, formValues) => {
@@ -33,6 +48,6 @@ export const editUser = (selectedUser, formValues) => {
 }
 
 export const deleteUser = (selectedUser) => {
-    console.log(selectedUser)
+    //console.log(selectedUser)
     return { type: DELETE_USER, payload: selectedUser }
 }

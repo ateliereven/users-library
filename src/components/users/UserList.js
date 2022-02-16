@@ -1,6 +1,9 @@
 import React from "react";
-import UserCard from "./UserCard";
 import { useSelector } from "react-redux";
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+
+import UserCard from "./UserCard";
 
 const UserList = () => {
     // getting user list from store:
@@ -21,17 +24,32 @@ const UserList = () => {
     }
 
     if (users) {
-        return <div id="user-cards" className="ui cards">
-            {renderList(users)}
-        </div>
+        return (
+            <main>
+                <Container sx={{ py: 5 }} >
+                    <Grid container spacing={4} justifyContent="center"
+                        alignItems="center">
+                    
+                        {renderList(users)}
+                    
+                    </Grid>
+                </Container>
+            </main>
+        )
 
     } else {
-        return <div className="ui segment">
-            <div className="ui active inverted dimmer">
-                <div className="ui text loader">Loading</div>
-            </div>
-            <p></p>
-        </div>
+        return (
+            <main>
+                <Container sx={{ py: 8 }} maxWidth="md">
+                    <div className="ui segment">
+                        <div className="ui active inverted dimmer">
+                            <div className="ui text loader">Loading</div>
+                        </div>
+                        <p></p>
+                    </div>
+                </Container>
+            </main>
+        )
     }
 
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import Button from '@mui/material/Button';
 
 import { deleteUser } from "../../actions";
 import Modal from "../Modal";
@@ -13,6 +14,7 @@ const UserDelete = () => {
     //(need to use == and not ===):
     // eslint-disable-next-line 
     const selectedUser = useSelector(state => state.find(user => user._id == id)) ;
+    
 
     const handleDeleteClick = () => {
         dispatch(deleteUser(selectedUser));
@@ -22,8 +24,12 @@ const UserDelete = () => {
     const renderActions = () => {
         return (
             <React.Fragment>
-                <button onClick={() => handleDeleteClick()} className="ui button negative">Delete</button>
-                <Link to='/' className="ui button">Cancel</Link>
+                <Link to='/'><Button variant="contained" sx={{ backgroundColor: (theme) => theme.palette.grey[400], mr: 2 }}>
+                    Cancel
+                </Button></Link>
+                <Button onClick={() => handleDeleteClick()} color="error" variant="contained">
+                    Delete
+                </Button>
             </React.Fragment>
         )
     }
