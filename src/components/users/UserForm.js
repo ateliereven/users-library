@@ -40,6 +40,7 @@ const UserForm = (props) => {
 
     //Return an input element to the component prop of Field, and hook it with relevant properties deconstructed from formProps:  
     const renderInput = ({ input, label, meta }) => {
+
         return (
             <TextField
                 required
@@ -48,7 +49,7 @@ const UserForm = (props) => {
                 value={input.value}
                 onChange={input.onChange}
                 error={meta.error && meta.touched ? true : false} // style as error
-                helperText={meta.error && meta.touched ? `${meta.error}` : ''} // Display an error message
+                helperText={meta.error && meta.touched ? `${meta.error}` : ''} // display an error message
 
             />
         );

@@ -2,6 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 import UserCard from "./UserCard";
 
@@ -39,12 +41,9 @@ const UserList = () => {
         return (
             <main>
                 <Container sx={{ py: 8 }} maxWidth="md">
-                    <div className="ui segment">
-                        <div className="ui active inverted dimmer">
-                            <div className="ui text loader">Loading</div>
-                        </div>
-                        <p></p>
-                    </div>
+                    <Box sx={{ display: 'flex', py: 20 }} justifyContent="center">
+                        <CircularProgress color="secondary" />
+                    </Box>
                 </Container>
             </main>
         )
