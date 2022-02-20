@@ -6,8 +6,8 @@ import { createStore, applyMiddleware, compose } from "redux";
 import reduxThunk from 'redux-thunk';
 import { BrowserRouter as Router } from "react-router-dom";
 
-import UserForm from './UserForm';
-import reducer from '../../reducers';
+import UserForm from '../components/users/UserForm';
+import reducer from '../reducers';
 
 describe('UserForm', () => {
     const onSubmit = jest.fn();
@@ -66,6 +66,20 @@ describe('UserForm', () => {
             expect(screen.getAllByText(/please enter street/i)[0]).toBeInTheDocument();
             expect(screen.getByText(/please enter street number/i)).toBeInTheDocument();
         })
+    });
+
+    it('Shows error when first name has less than 3 characters', async () => {
+        user.type(getFirstName(), 'Jo');
+        clickSubmitButton();
+
+        await waitFor(() => expect(screen.getByText(/name must be at least 3 characters long/i)).toBeInTheDocument())
+    });
+
+    it('Shows error when email address is invalid', async () => {
+        user.type(getEmail(), 'johndoe.com');
+        clickSubmitButton();
+
+        await waitFor(() => expect(screen.getByText(/please enter a valid email address/i)).toBeInTheDocument())
     });
 });
 
