@@ -33,7 +33,7 @@ export const fetchUsers = () => async dispatch => {
             result._id = results.indexOf(result) + 1;
         }
         localStorage.setItem("users", JSON.stringify(results));
-        const expiration = Number(new Date() * 3600 * 1000);
+        const expiration = Number(new Date()) + 3600 * 1000 * 2; //expires in 2 hours
         localStorage.setItem("expiration", expiration);
         dispatch({ type: FETCH_USERS, payload: results });
     }
