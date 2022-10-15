@@ -2,7 +2,7 @@
 A simple user library app in built with React and Material UI, implementing CRUD operations.
 Data is provided via an Ajax Request to an api, state is managed by Redux.
 
-View [deployment](https://users-library-by-oe.herokuapp.com/)
+View [deployment](https://users-library-by-oe.netlify.app/)
 
 ![Alt text](src/img/users-library.jpg?raw=true "The Users Library")
 
